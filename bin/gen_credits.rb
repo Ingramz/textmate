@@ -68,30 +68,7 @@ class GitHubLookup
   end
 
   def self.user_by_email(email)
-    emailhash = Digest::MD5.hexdigest(email)
-    if @db.has_key?(emailhash)
-      return @db[emailhash]
-    end
-
-    url = 'https://api.github.com/legacy/user/email/' + email
-    uri = URI.parse(url)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-    # issue request
-    request = Net::HTTP::Get.new(uri.request_uri, {'User-Agent' => 'curl'})
-    response = http.request(request)
-
-    # could be a 404, return nil if so
-    if response.code == '404'
-      return @db[emailhash] = nil
-    end
-
-    user = YAML.load(response.body)
-    return nil if user.nil?
-    # save result to k/v store
-    return @db[emailhash] = user['user']['login']
+    return nil
   end
 
 end
