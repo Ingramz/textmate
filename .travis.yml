@@ -7,4 +7,4 @@ before_install:
   - brew install ragel multimarkdown ninja capnp google-sparsehash libressl
 install: ./configure
 script: ninja TextMate
-osx_image: xcode9
+osx_image: xcode8.3
